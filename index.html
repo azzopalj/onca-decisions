@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ONCA Decisions — Court of Appeal for Ontario</title>
+  <meta name="description" content="Every decision from the Court of Appeal for Ontario, in one place. Real-time notifications, AI summaries, and 60+ years of searchable case law.">
+  <meta property="og:title" content="ONCA Decisions">
+  <meta property="og:description" content="Every ONCA decision in one place. Same-day alerts, AI summaries, full archive.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #1a2f52;
+      --blue:    #2251a3;
+      --gold:    #c9a84c;
+      --cream:   #f8f5ef;
+      --white:   #ffffff;
+      --text:    #1a1a1a;
+      --muted:   #6b7280;
+      --border:  rgba(26,47,82,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(248,245,239,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--navy); text-decoration: none;
+    }
+    .nav-icon {
+      width: 36px; height: 36px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-icon svg { width: 20px; height: 20px; fill: var(--gold); }
+    nav a.cta {
+      background: var(--navy); color: var(--white);
+      padding: 0.6rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.875rem; font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    nav a.cta:hover { background: var(--blue); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(34,81,163,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(26,47,82,0.07);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.04em;
+      color: var(--navy); text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700; line-height: 1.1;
+      color: var(--navy);
+      max-width: 800px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    h1 em { font-style: italic; color: var(--blue); }
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 1.15rem; font-weight: 300;
+      color: var(--muted); line-height: 1.7;
+      max-width: 540px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      justify-content: center; margin-top: 2.5rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--navy); color: var(--white);
+      padding: 0.9rem 2rem; border-radius: 999px;
+      font-size: 1rem; font-weight: 500;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .btn-primary:hover { background: var(--blue); transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent; color: var(--navy);
+      padding: 0.9rem 2rem; border-radius: 999px;
+      border: 1.5px solid var(--navy);
+      font-size: 1rem; font-weight: 500;
+      text-decoration: none;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { background: var(--navy); color: var(--white); transform: translateY(-2px); }
+
+    /* Court seal decorative element */
+    .hero-seal {
+      margin-top: 4rem;
+      width: 100%; max-width: 960px;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .phone-mockup {
+      background: var(--navy);
+      border-radius: 36px;
+      padding: 12px;
+      box-shadow: 0 40px 80px rgba(26,47,82,0.25), 0 0 0 1px rgba(255,255,255,0.05);
+      display: inline-block;
+      position: relative;
+    }
+    .phone-screen {
+      background: #f0ece4;
+      border-radius: 26px;
+      width: 280px; height: 560px;
+      overflow: hidden;
+      position: relative;
+    }
+    .phone-status {
+      background: #f0ece4;
+      padding: 12px 20px 0;
+      display: flex; justify-content: space-between;
+      font-size: 11px; font-weight: 600; color: var(--navy);
+    }
+    .phone-content { padding: 16px; }
+    .phone-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .phone-sub { font-size: 11px; color: var(--muted); margin-bottom: 16px; }
+    .case-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+    }
+    .case-card-title { font-size: 13px; font-weight: 500; color: var(--navy); line-height: 1.3; }
+    .case-card-meta { display: flex; gap: 6px; align-items: center; margin-top: 5px; }
+    .case-cite { font-size: 11px; font-weight: 500; color: var(--blue); }
+    .case-tag {
+      font-size: 9px; padding: 2px 7px; border-radius: 999px;
+      font-weight: 500;
+    }
+    .tag-criminal { background: rgba(220,38,38,0.1); color: #991b1b; }
+    .tag-civil    { background: rgba(34,81,163,0.1); color: var(--blue); }
+    .case-date { font-size: 10px; color: var(--muted); margin-top: 3px; }
+    .new-badge {
+      font-size: 8px; font-weight: 700; background: #f97316;
+      color: white; padding: 1px 5px; border-radius: 999px; letter-spacing: 0.05em;
+    }
+
+    /* ── FEATURES ── */
+    .section {
+      padding: 6rem 2rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; color: var(--navy);
+      line-height: 1.2; max-width: 600px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .feature-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 2rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26,47,82,0.1); }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem; font-size: 22px;
+    }
+    .feature-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 600; color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+    .feature-tag {
+      display: inline-block; margin-top: 1rem;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+    }
+    .tag-free { background: rgba(26,47,82,0.07); color: var(--navy); }
+    .tag-premium { background: var(--gold); color: var(--white); }
+
+    /* ── STATS ── */
+    .stats-bar {
+      background: var(--navy);
+      padding: 3.5rem 2rem;
+    }
+    .stats-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2rem; text-align: center;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 700; color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem; }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .pricing-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.5rem;
+    }
+    .pricing-card.featured {
+      border-color: var(--navy);
+      border-width: 2px;
+      position: relative;
+    }
+    .featured-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--navy); color: var(--white);
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.4rem 1.2rem; border-radius: 999px;
+    }
+    .price-tier { font-size: 0.8rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .price-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem; font-weight: 700; color: var(--navy);
+      line-height: 1; margin: 0.75rem 0 0.25rem;
+    }
+    .price-amount sup { font-size: 1.5rem; vertical-align: top; margin-top: 0.75rem; display: inline-block; }
+    .price-period { font-size: 0.85rem; color: var(--muted); }
+    .price-features { list-style: none; margin: 2rem 0; }
+    .price-features li {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      font-size: 0.9rem; color: var(--text);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .price-features li:last-child { border-bottom: none; }
+    .price-features li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+    .btn-plan {
+      display: block; text-align: center;
+      background: var(--navy); color: var(--white);
+      padding: 0.9rem; border-radius: 999px;
+      font-weight: 500; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-plan:hover { background: var(--blue); }
+    .btn-plan.outline {
+      background: transparent; color: var(--navy);
+      border: 1.5px solid var(--navy);
+    }
+    .btn-plan.outline:hover { background: var(--navy); color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 3rem 2rem 2rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; gap: 2rem;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; color: var(--white); font-weight: 600;
+    }
+    .footer-brand p { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; margin-top: 0.5rem; font-weight: 300; }
+    .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start; }
+    .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      max-width: 1100px; margin: 2rem auto 0;
+      padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem; color: rgba(255,255,255,0.4);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.25rem; }
+      .hero { padding: 7rem 1.25rem 4rem; }
+      .section { padding: 4rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nav-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 3L2 9v2h2v9h3v-6h4v6h3V11h2V9L12 3zm0-2l11 7v3h-2v9H3V11H1V8L12 1z"/></svg>
+    </div>
+    ONCA Decisions
+  </a>
+  <a href="https://apps.apple.com" class="cta">Download Free</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><span></span> Now available on the App Store</div>
+  <h1>Ontario appellate law,<br><em>instantly</em> in your pocket</h1>
+  <p class="hero-sub">Every decision from the Court of Appeal for Ontario — searchable, filterable, and delivered to you the moment it drops. Six decades of case law, one app.</p>
+  <div class="hero-actions">
+    <a href="https://apps.apple.com" class="btn-primary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download on iOS
+    </a>
+    <a href="#features" class="btn-secondary">Learn more</a>
+  </div>
+
+  <!-- Phone mockup -->
+  <div class="hero-seal">
+    <div class="phone-mockup">
+      <div class="phone-screen">
+        <div class="phone-status">
+          <span>9:41</span>
+          <span>●●●</span>
+        </div>
+        <div class="phone-content">
+          <div class="phone-title">ONCA Decisions</div>
+          <div class="phone-sub">2026 · 376 decisions</div>
+
+          <div class="case-card">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div class="case-card-title" style="max-width:200px;">Pilaszek v. SCIV Inc.</div>
+              <span class="new-badge">NEW</span>
+            </div>
+            <div class="case-card-meta">
+              <span class="case-cite">2026 ONCA 376</span>
+              <span class="case-tag tag-civil">Civil</span>
+            </div>
+            <div class="case-date">May 27, 2026</div>
+          </div>
+
+          <div class="case-card">
+            <div class="case-card-title">Ali v. Harris</div>
+            <div class="case-card-meta">
+              <span class="case-cite">2026 ONCA 375</span>
+              <span class="case-tag tag-civil">Civil</span>
+            </div>
+            <div class="case-date">May 27, 2026</div>
+          </div>
+
+          <div class="case-card">
+            <div class="case-card-title">R. v. A.B.</div>
+            <div class="case-card-meta">
+              <span class="case-cite">2026 ONCA 361</span>
+              <span class="case-tag tag-criminal">Criminal</span>
+            </div>
+            <div class="case-date">May 22, 2026</div>
+          </div>
+
+          <div class="case-card">
+            <div class="case-card-title">R. v. G.D.</div>
+            <div class="case-card-meta">
+              <span class="case-cite">2026 ONCA 354</span>
+              <span class="case-tag tag-criminal">Criminal</span>
+            </div>
+            <div class="case-date">May 19, 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div>
+      <div class="stat-num">36K+</div>
+      <div class="stat-label">Decisions in archive</div>
+    </div>
+    <div>
+      <div class="stat-num">60+</div>
+      <div class="stat-label">Years of case law</div>
+    </div>
+    <div>
+      <div class="stat-num">&lt;15min</div>
+      <div class="stat-label">Time to notification</div>
+    </div>
+    <div>
+      <div class="stat-num">Free</div>
+      <div class="stat-label">To download</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-label">Features</div>
+  <h2 class="section-title">Everything you need for Ontario appellate law</h2>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(26,47,82,0.08)">📚</div>
+      <h3>Full Archive</h3>
+      <p>Search and browse 36,000+ decisions going back to the 1960s. Filter by year, subject area, or keywords. Client-side and server-side search for instant results across the entire archive.</p>
+      <span class="feature-tag tag-free">Free</span>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(201,168,76,0.12)">🔔</div>
+      <h3>Same-Day Notifications</h3>
+      <p>Get push notifications within 15 minutes of a decision being released — before it appears on CanLII. Filter alerts by criminal, civil, or both. Read the PDF directly in the app.</p>
+      <span class="feature-tag tag-premium">Premium</span>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(34,81,163,0.08)">✨</div>
+      <h3>AI Summaries</h3>
+      <p>Plain-language summaries generated by Claude AI — what happened, what was decided, and why it matters. Available in English and French, matching the language of each decision.</p>
+      <span class="feature-tag tag-premium">Premium</span>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(26,47,82,0.08)">🔗</div>
+      <h3>Case Citator</h3>
+      <p>See how many times a decision has been cited and which cases it relies on, powered by CanLII's citator database. Instantly understand a case's precedential weight.</p>
+      <span class="feature-tag tag-free">Free</span>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(201,168,76,0.12)">📎</div>
+      <h3>Citator Alerts</h3>
+      <p>Get notified automatically when a case you've bookmarked is cited in a new decision. Stay on top of how the law is developing in your areas of practice.</p>
+      <span class="feature-tag tag-premium">Premium</span>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon" style="background:rgba(26,47,82,0.08)">🔖</div>
+      <h3>Bookmarks & Search</h3>
+      <p>Bookmark decisions to return to them quickly. Full-text search across the entire 36,000-decision archive by case name, citation, docket number, or keyword.</p>
+      <span class="feature-tag tag-free">Free</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section style="background: var(--white); padding: 6rem 0;">
+  <div class="section" style="padding-top:0;padding-bottom:0;">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Start free, unlock more when you need it</h2>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="price-tier">Free</div>
+        <div class="price-amount">$0</div>
+        <div class="price-period">forever</div>
+        <ul class="price-features">
+          <li>Full 36,000+ decision archive</li>
+          <li>Year and subject filtering</li>
+          <li>Full-text search</li>
+          <li>Case citator</li>
+          <li>Bookmarks</li>
+          <li>Same-day PDF access</li>
+          <li>CanLII integration</li>
+        </ul>
+        <a href="https://apps.apple.com" class="btn-plan outline">Download Free</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="price-tier">Premium — Annual</div>
+        <div class="price-amount"><sup>$</sup>22.99</div>
+        <div class="price-period">per year · ~$1.92/month</div>
+        <ul class="price-features">
+          <li>Everything in Free</li>
+          <li>Push notifications for new decisions</li>
+          <li>Filter alerts by criminal / civil</li>
+          <li>AI plain-language summaries</li>
+          <li>Citator alerts for bookmarked cases</li>
+          <li>Bilingual (English & French)</li>
+        </ul>
+        <a href="https://apps.apple.com" class="btn-plan">Start Premium</a>
+      </div>
+
+      <div class="pricing-card">
+        <div class="price-tier">Premium — Monthly</div>
+        <div class="price-amount"><sup>$</sup>1.99</div>
+        <div class="price-period">per month · cancel anytime</div>
+        <ul class="price-features">
+          <li>Everything in Free</li>
+          <li>Push notifications for new decisions</li>
+          <li>Filter alerts by criminal / civil</li>
+          <li>AI plain-language summaries</li>
+          <li>Citator alerts for bookmarked cases</li>
+          <li>Bilingual (English & French)</li>
+        </ul>
+        <a href="https://apps.apple.com" class="btn-plan outline">Start Monthly</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      ONCA Decisions
+      <p>Court of Appeal for Ontario case law,<br>in your pocket.</p>
+    </div>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use</a>
+      <a href="https://www.ontariocourts.ca/coa/en/">ONCA Website</a>
+      <a href="https://www.canlii.org/on/onca">CanLII</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 ONCA Decisions. Not affiliated with the Court of Appeal for Ontario, the Government of Ontario, or CanLII. Decision data provided by CanLII under their terms of use.</p>
+  </div>
+</footer>
+
+</body>
+</html>
